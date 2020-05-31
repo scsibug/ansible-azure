@@ -1,0 +1,12 @@
+- name: Destroy Small Azure Dev VM
+  hosts: localhost
+  connection: local
+  vars_files:
+    - env.yml
+  tasks:
+  - name: Remove resource group
+    azure_rm_resourcegroup:
+      name: "{{ resourceGroup }}"
+      location: "{{ location }}"
+      state: absent
+      force_delete_nonempty: yes
