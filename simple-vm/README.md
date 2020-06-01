@@ -1,4 +1,4 @@
-# ansible-aws-simple
+# simple-vm
 Simple playbooks to provision and teardown Azure virtual machines.
 
 ## About

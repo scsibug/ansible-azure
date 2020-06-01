@@ -1,12 +1,13 @@
-Scripts for automating Azure with Ansible.
+# ansible-azure
+Ansible playbooks for automating Azure infrastructure.
 
-You can run these without any need for local Ansible installation.
+## Running on Azure CloudShell
 
-Login to portal.azure.com
+These scripts are designed to be runnable without any need for local Ansible installation.  Just use the built-in copy of Ansible that Azure provides.  The following quick tutorial walks through doing this for the ```simple-vm``` example.
 
-Open a Cloud Shell (bash).
+First, login to portal.azure.com and open a Cloud Shell (bash).
 
-Checkout this repository:
+Checkout this repository using the built-in ```git``` client:
 
 ```
 scsibug@Azure:~/clouddrive$ git clone https://github.com/scsibug/ansible-azure.git
@@ -59,8 +60,8 @@ The key's randomart image is:
 Then, output and copy the SSH public key.  This value will go into the environment YAML file our Ansible playbook will use.
 
 ```
-scsibug@Azure:~/clouddrive/ansible-azure/simple-vm$ cat /home/greg/.ssh/id_rsa.pub
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKovPQbir5L8Sr0CazbRUvq5YxnMTQa/B3RjwJuKYvM3C3gsny95W0S6frmq/gkxgDg838Z3W1K/czkTJ0XqdxJ9hVBqVqQqG82VX+6hxEVtFf/AMWZok25KkUn/btSLESK6VJdjOuJ13Js+piCcMdTbRIaoYnohRaMaqrzwov2GKY23Q+i95jbcSNj9DugF9taaNYgWV63s/kFQweV+RjF3hEGSuuaKp1RBJy+xO7V3amX3+DToV3EXVF1j5kz08A2xsER9vK5z9ZCE+0rzzimTncxyZoOA23Wpc0xSKhXXLpy8OP5bCHSGYzsGBKa8k930uUeDkMZCFzq8ccbcU9 greg@cc-e70e8169-79dbcd95f5-fxwmb
+scsibug@Azure:~/clouddrive/ansible-azure/simple-vm$ cat /home/scsibug/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKovPQbir5L8Sr0CazbRUvq5YxnMTQa/B3RjwJuKYvM3C3gsny95W0S6frmq/gkxgDg838Z3W1K/czkTJ0XqdxJ9hVBqVqQqG82VX+6hxEVtFf/AMWZok25KkUn/btSLESK6VJdjOuJ13Js+piCcMdTbRIaoYnohRaMaqrzwov2GKY23Q+i95jbcSNj9DugF9taaNYgWV63s/kFQweV+RjF3hEGSuuaKp1RBJy+xO7V3amX3+DToV3EXVF1j5kz08A2xsER9vK5z9ZCE+0rzzimTncxyZoOA23Wpc0xSKhXXLpy8OP5bCHSGYzsGBKa8k930uUeDkMZCFzq8ccbcU9 scsibug@cc-e70e8169-79dbcd95f5-fxwmb
 ```
 
 Edit the ```env.yml``` file to change the ```admin_user``` and ```ssh_pubkey``` variables to use our own local username and the key we generated.  Either use a linux editor like ```vi```/```emacs```, or type ```code env.yml``` to open up the graphical web editor.
