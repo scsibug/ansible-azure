@@ -39,7 +39,9 @@ scsibug@Azure:~/clouddrive$ cp env.yml.sample env.yml
 ### Generating SSH Keypair
 
 For this example, we need to generate a public/private keypair so that
-we can SSH into the server from the Cloud Shell.  You can just leave the 
+we can SSH into the server from the Cloud Shell.  Use hte default
+suggested location, and leave the passphrase blank since this is just
+a quick demonstration.
 
 ```
 scsibug@Azure:~/clouddrive/ansible-azure/simple-vm$ ssh-keygen -q
@@ -49,25 +51,38 @@ Enter same passphrase again:
 Generating public/private rsa key pair.
 ```
 
-Then, output and copy the SSH public key.  This value will go into the environment YAML file our Ansible playbook will use.
+Then, display and copy the SSH public key.  This value will go into
+the environment YAML file our Ansible playbook will use, eventually
+being placed on the new VM and allowing us to login without having to
+use a password.
 
 ```
 scsibug@Azure:~/clouddrive/ansible-azure/simple-vm$ cat /home/scsibug/.ssh/id_rsa.pub
 ssh-rsa AAAAB <..snip..> scsibug@cc-e70e8169-79dbcd95f5-fxwmb
 ```
 
-Edit the ```env.yml``` file to change the ```admin_user``` and ```ssh_pubkey``` variables to use our own local username and the key we generated.  Either use a linux editor like ```vi```/```emacs```, or type ```code env.yml``` to open up the graphical web editor.
+Edit the ```env.yml``` file to change the ```admin_user``` and
+```ssh_pubkey``` variables to use our own local username and the key
+we generated.  Either use a linux editor like ```vi```/```emacs```, or
+type ```code env.yml``` to open up the graphical web editor.  Be sure
+to use the exact same value for ```admin_user``` as the CloudShell
+displays for your user, otherwise the ```ssh``` command will not work
+without that being specified as well.
 
 ```
   admin_user: scsibug
   ssh_pubkey: "ssh-rsa AAAAB <..snip..> scsibug@cc-e70e8169-79dbcd95f5-fxwmb"
 ```
 
-Now, we are ready to run Ansible and create our new resource group, VNET, public IP, and VM.
+Now, we are ready to run Ansible and have it create our new resource
+group, virtual network, public IP, network security group, and VM and
+associated disk.  These will be created within the default
+subscription.
 
 ### Running the Playbook
 
-Ansible is pre-installed, and the playbook is configured to read from the ```env.yml`` file we edited.
+Ansible is pre-installed, and the playbook is configured to read from
+the ```env.yml`` file we edited.
 
 ```
 scsibug@Azure:~/clouddrive$ ansible-playbook provision.yml
