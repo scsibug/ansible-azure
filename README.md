@@ -98,7 +98,8 @@ ok: [localhost] => {
 PLAY RECAP *********************************************************************
 localhost                  : ok=9    changed=7    unreachable=0    failed=0
 skipped=0    rescued=0    ignored=0   
-``
+```
+
 Note the IP address that was reported, since that is now connected to our server.
 
 If it was successful, you should be able to remote into the VM, and run commands.
