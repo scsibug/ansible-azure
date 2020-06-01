@@ -112,7 +112,7 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added '40.124.26.110' (ECDSA) to the list of known hosts.
 Activate the web console with: systemctl enable --now cockpit.socket
 
-[admin@centos-vm ~]$ hostname
+[scsibug@centos-vm ~]$ hostname
 centos-vm
 ```
 
