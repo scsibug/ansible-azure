@@ -7,7 +7,9 @@ These scripts are designed to be runnable without any need for local Ansible ins
 
 First, login to portal.azure.com and open a Cloud Shell (bash).
 
-Checkout this repository using the built-in ```git``` client:
+### Checkout the Code
+
+Clone this repository using the built-in ```git``` client:
 
 ```
 scsibug@Azure:~/clouddrive$ git clone https://github.com/scsibug/ansible-azure.git
@@ -20,57 +22,93 @@ Unpacking objects: 100% (10/10), done.
 Checking connectivity... done.
 ```
 
-Then, just run playbooks using their own instructions.
+### Selecting a Playbook
 
-As an example, try running the ```simple-vm``` example.
+Now, all the playbooks are available to run with the
+```ansible-playbook``` command.  As an example, try running the
+```simple-vm``` example.
 
-Go into the project directory, and copy the sample environment file into one that we will customize.
+Go into the project directory, and copy the sample environment file
+into one that we will customize.
 
 ```
 scsibug@Azure:~/clouddrive$ cd ansible-azure/simple-vm
 scsibug@Azure:~/clouddrive$ cp env.yml.sample env.yml
 ```
 
-Then, generate a public/private keypair so we can SSH into the server from the Cloud Shell.
+### Generating SSH Keypair
+
+For this example, we need to generate a public/private keypair so that
+we can SSH into the server from the Cloud Shell.  You can just leave the 
 
 ```
-scsibug@Azure:~/clouddrive/ansible-azure/simple-vm$ ssh-keygen
-Generating public/private rsa key pair.
+scsibug@Azure:~/clouddrive/ansible-azure/simple-vm$ ssh-keygen -q
 Enter file in which to save the key (/home/scsibug/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/scsibug/.ssh/id_rsa.
-Your public key has been saved in /home/scsibug/.ssh/id_rsa.pub.
-The key fingerprint is:
-SHA256:9EKQJCNO92uR1FClWvvamvtFAXfaJnvX1PLcQW/KPDU scsibug@cc-e70e8169-79dbcd95f5-fxwmb
-The key's randomart image is:
-+---[RSA 2048]----+
-|  o +.==..o . .. |
-| o o =.o.. o +. o|
-|  .   + =   + +E*|
-|       B o   B O=|
-|      + S . o * *|
-|     .   o . . o |
-|          . .    |
-|         + .     |
-|        =+o      |
-+----[SHA256]-----+
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Generating public/private rsa key pair.
 ```
 
 Then, output and copy the SSH public key.  This value will go into the environment YAML file our Ansible playbook will use.
 
 ```
 scsibug@Azure:~/clouddrive/ansible-azure/simple-vm$ cat /home/scsibug/.ssh/id_rsa.pub
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKovPQbir5L8Sr0CazbRUvq5YxnMTQa/B3RjwJuKYvM3C3gsny95W0S6frmq/gkxgDg838Z3W1K/czkTJ0XqdxJ9hVBqVqQqG82VX+6hxEVtFf/AMWZok25KkUn/btSLESK6VJdjOuJ13Js+piCcMdTbRIaoYnohRaMaqrzwov2GKY23Q+i95jbcSNj9DugF9taaNYgWV63s/kFQweV+RjF3hEGSuuaKp1RBJy+xO7V3amX3+DToV3EXVF1j5kz08A2xsER9vK5z9ZCE+0rzzimTncxyZoOA23Wpc0xSKhXXLpy8OP5bCHSGYzsGBKa8k930uUeDkMZCFzq8ccbcU9 scsibug@cc-e70e8169-79dbcd95f5-fxwmb
+ssh-rsa AAAAB <..snip..> scsibug@cc-e70e8169-79dbcd95f5-fxwmb
 ```
 
 Edit the ```env.yml``` file to change the ```admin_user``` and ```ssh_pubkey``` variables to use our own local username and the key we generated.  Either use a linux editor like ```vi```/```emacs```, or type ```code env.yml``` to open up the graphical web editor.
 
 ```
   admin_user: scsibug
-  ssh_pubkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKovPQbir5L8Sr0CazbRUvq5YxnMTQa/B3RjwJuKYvM3C3gsny95W0S6frmq/gkxgDg838Z3W1K/czkTJ0XqdxJ9hVBqVqQqG82VX+6hxEVtFf/AMWZok25KkUn/btSLESK6VJdjOuJ13Js+piCcMdTbRIaoYnohRaMaqrzwov2GKY23Q+i95jbcSNj9DugF9taaNYgWV63s/kFQweV+RjF3hEGSuuaKp1RBJy+xO7V3amX3+DToV3EXVF1j5kz08A2xsER9vK5z9ZCE+0rzzimTncxyZoOA23Wpc0xSKhXXLpy8OP5bCHSGYzsGBKa8k930uUeDkMZCFzq8ccbcU9 scsibug@cc-e70e8169-79dbcd95f5-fxwmb"
+  ssh_pubkey: "ssh-rsa AAAAB <..snip..> scsibug@cc-e70e8169-79dbcd95f5-fxwmb"
 ```
 
 Now, we are ready to run Ansible and create our new resource group, VNET, public IP, and VM.
 
-If it was successful, you should be able to remote into the VM, and check it's OS and hostname.
+### Running the Playbook
+
+Ansible is pre-installed, and the playbook is configured to read from the ```env.yml`` file we edited.
+
+```
+scsibug@Azure:~/clouddrive$ ansible-playbook provision.yml
+PLAY [Create Small Azure Dev VM] ***********************************************
+<..snip..>
+TASK [Show public IP for VM which will be created] *****************************
+ok: [localhost] => {
+    "msg": "The public IP is 40.124.26.110."
+}
+PLAY RECAP *********************************************************************
+localhost                  : ok=9    changed=7    unreachable=0    failed=0
+skipped=0    rescued=0    ignored=0   
+``
+Note the IP address that was reported, since that is now connected to our server.
+
+If it was successful, you should be able to remote into the VM, and run commands.
+
+```
+% ssh 40.124.26.110
+The authenticity of host '40.124.26.110 (40.124.26.110)' can't be established.
+ECDSA key fingerprint is SHA256:eSPuviKC/JyCpwvVTwL8e3oO/YslYp2gJfNgeZ+sUb4.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '40.124.26.110' (ECDSA) to the list of known hosts.
+Activate the web console with: systemctl enable --now cockpit.socket
+
+[admin@centos-vm ~]$ hostname
+centos-vm
+```
+
+### Tearing Down
+
+Once finished, run the teardown playbook to clean up the resources we created.
+
+```
+% ansible-playbook teardown.yml 
+PLAY [Destroy Small Azure Dev VM] **********************************************
+
+<..snip..>
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0
+skipped=0    rescued=0    ignored=0   
+```
+
