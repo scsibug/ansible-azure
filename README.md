@@ -3,7 +3,10 @@ Ansible playbooks for automating Azure infrastructure.
 
 ## Running on Azure CloudShell
 
-These scripts are designed to be runnable without any need for local Ansible installation.  Just use the built-in copy of Ansible that Azure provides.  The following quick tutorial walks through doing this for the ```simple-vm``` example.
+These scripts are designed to be runnable without any need for local
+Ansible installation.  Just use the built-in copy of Ansible that
+Azure provides.  The following quick tutorial walks through doing this
+for the ```simple-vm``` example.
 
 First, login to portal.azure.com and open a Cloud Shell (bash).
 
