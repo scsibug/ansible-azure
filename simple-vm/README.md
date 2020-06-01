@@ -8,10 +8,10 @@ https://docs.microsoft.com/en-us/azure/developer/ansible/vm-configure
 
 With the following improvements:
 
- * Added a deprovisioning playbook.
+ * Added a deprovisioning playbook
  * Externalize variables
- * Use managed disks.
- * Default to CentOS 8, on a smaller VM.
+ * Use managed disks
+ * Default to CentOS 8, on a smaller VM
 
 ## Usage
 
@@ -20,7 +20,8 @@ SSH public key) in the ```env.yml``` file (```env.yml.sample```
 provided as a template).
 
 Run the ```ansible-playbook provision.yml``` to create a resource
-group containing the VM, VNet, and a public IP.
+group containing the VNet, subnet, public IP, network security group,
+VM, and managed disk.
 
 Run ```ansible-playbook teardown.yml``` to delete the resource group,
 and all its member resources.
@@ -79,10 +80,11 @@ skipped=0    rescued=0    ignored=0
 
 ## Using the VM
 
-Using a host with the corresponding SSH private key available, login to the newly provisioned server, and check the hostname.
+Using a host with the corresponding SSH private key available, login
+to the newly provisioned server, and check the hostname.
 
 ```
-% ssh 40.124.26.110
+% ssh admin@40.124.26.110
 The authenticity of host '40.124.26.110 (40.124.26.110)' can't be established.
 ECDSA key fingerprint is SHA256:eSPuviKC/JyCpwvVTwL8e3oO/YslYp2gJfNgeZ+sUb4.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
