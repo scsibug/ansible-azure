@@ -79,12 +79,12 @@ without that being specified as well.
   ssh_pubkey: "ssh-rsa AAAAB <..snip..> scsibug@cc-e70e8169-79dbcd95f5-fxwmb"
 ```
 
+### Running the Playbook
+
 Now, we are ready to run Ansible and have it create our new resource
 group, virtual network, public IP, network security group, and VM and
 associated disk.  These will be created within the default
 subscription.
-
-### Running the Playbook
 
 Ansible is pre-installed, and the playbook is configured to read from
 the ```env.yml`` file we edited.
