@@ -54,6 +54,8 @@ Enter same passphrase again:
 Generating public/private rsa key pair.
 ```
 
+### Setup Environment
+
 Then, display and copy the SSH public key.  This value will go into
 the environment YAML file our Ansible playbook will use, eventually
 being placed on the new VM and allowing us to login without having to
