@@ -123,9 +123,7 @@ Once finished, run the teardown playbook to clean up the resources we created.
 ```
 % ansible-playbook teardown.yml 
 PLAY [Destroy Small Azure Dev VM] **********************************************
-
 <..snip..>
-
 PLAY RECAP *********************************************************************
 localhost                  : ok=2    changed=1    unreachable=0    failed=0
 skipped=0    rescued=0    ignored=0   
